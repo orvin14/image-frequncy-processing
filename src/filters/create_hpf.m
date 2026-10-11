@@ -1,10 +1,11 @@
 function H = create_hpf(M, N, cutoff, filter_type, order)
 %CREATE_HPF Create Ideal, Gaussian, or Butterworth HPF H(u,v).
 
+%   order is only used by the Butterworth type; it is ignored otherwise.
+
 validateattributes(M, {'numeric'}, {'scalar','integer','positive'});
 validateattributes(N, {'numeric'}, {'scalar','integer','positive'});
 validateattributes(cutoff, {'numeric'}, {'scalar','positive'});
-validateattributes(order, {'numeric'}, {'scalar','positive'});
 
 [u,v] = meshgrid((-floor(N/2)):(ceil(N/2)-1), ...
                  (-floor(M/2)):(ceil(M/2)-1));
@@ -17,6 +18,10 @@ switch t
     case "gaussian"
         H = 1 - exp(-(D.^2) ./ (2*cutoff^2));
     case "butterworth"
+        if nargin < 5 || isempty(order)
+            order = 2;
+        end
+        validateattributes(order, {'numeric'}, {'scalar','positive'});
         H = ones(M,N);
         nz = D > 0;
         H(nz) = 1 ./ (1 + (cutoff ./ D(nz)).^(2*order));

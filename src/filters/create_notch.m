@@ -4,11 +4,11 @@ function H = create_notch(M, N, u0, v0, radius, filter_type, order)
 %   u0 and v0 are offsets from the centered spectrum origin in pixels.
 %   radius controls the rejected neighborhood around (+u0,+v0) and
 %   (-u0,-v0). Supports ideal, Gaussian and Butterworth notch shapes.
+%   order is only used by the Butterworth type; it is ignored otherwise.
 
 validateattributes(u0, {'numeric'}, {'scalar','real','finite'});
 validateattributes(v0, {'numeric'}, {'scalar','real','finite'});
 validateattributes(radius, {'numeric'}, {'scalar','real','positive'});
-validateattributes(order, {'numeric'}, {'scalar','real','positive'});
 
 [x,y] = meshgrid((-floor(N/2)):(ceil(N/2)-1), ...
                  (-floor(M/2)):(ceil(M/2)-1));
@@ -24,6 +24,10 @@ switch t
         H1 = 1 - exp(-(D1.^2)/(2*radius^2));
         H2 = 1 - exp(-(D2.^2)/(2*radius^2));
     case "butterworth"
+        if nargin < 7 || isempty(order)
+            order = 2;
+        end
+        validateattributes(order, {'numeric'}, {'scalar','real','positive'});
         H1 = ones(M,N);
         H2 = ones(M,N);
         nz1 = D1 > 0;
