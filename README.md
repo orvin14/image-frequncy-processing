@@ -1,6 +1,6 @@
 # Tugas 2 IF4073 — Pemrosesan Citra dalam Ranah Frekuensi & Restorasi
 
-Implementasi individu berbasis MATLAB untuk smoothing/low-pass, high-pass,
+Implementasi berbasis MATLAB untuk smoothing/low-pass, high-pass,
 frequency-domain brightness, periodic-noise restoration, dan motion-blur
 restoration.
 
@@ -114,13 +114,3 @@ check_constraints
 5. Ukuran/range bandreject dan notch.
 6. Dimensi motion PSF, inverse, dan Wiener.
 
-## Catatan tentang App Designer
-
-Versi yang diberikan menggunakan `uifigure` programmatic GUI dalam
-`src/main_gui.m`. Ini sengaja dibuat sebagai source-code MATLAB yang
-portable dan mudah direview/dijalankan tanpa file `.mlapp` biner.
-
-Secara fungsional ia tetap merupakan satu GUI terpadu. Jika submission
-kampus secara eksplisit mewajibkan ekstensi `.mlapp`, layout dan callback
-di `main_gui.m` dapat dipindahkan ke App Designer dengan struktur kontrol
-yang sama; backend `.m` tidak perlu diubah.
